@@ -13,6 +13,7 @@ import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var infoBar: UIView!
     
     let locationManager = CLLocationManager()
     var region = MKCoordinateRegion()
