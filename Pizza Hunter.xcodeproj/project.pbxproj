@@ -12,6 +12,7 @@
 		499EE37B20F6629600036071 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499EE37920F6629600036071 /* Main.storyboard */; };
 		499EE37D20F6629700036071 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 499EE37C20F6629700036071 /* Assets.xcassets */; };
 		499EE38020F6629700036071 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499EE37E20F6629700036071 /* LaunchScreen.storyboard */; };
+		499EE38820F6671800036071 /* LocationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499EE38720F6671800036071 /* LocationDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		499EE37C20F6629700036071 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		499EE37F20F6629700036071 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		499EE38120F6629700036071 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		499EE38720F6671800036071 /* LocationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		499EE37420F6629600036071 /* Pizza Hunter */ = {
 			isa = PBXGroup;
 			children = (
+				499EE38720F6671800036071 /* LocationDetailsViewController.swift */,
 				499EE37520F6629600036071 /* AppDelegate.swift */,
 				499EE37720F6629600036071 /* ViewController.swift */,
 				499EE37920F6629600036071 /* Main.storyboard */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				499EE38820F6671800036071 /* LocationDetailsViewController.swift in Sources */,
 				499EE37820F6629600036071 /* ViewController.swift in Sources */,
 				499EE37620F6629600036071 /* AppDelegate.swift in Sources */,
 			);
