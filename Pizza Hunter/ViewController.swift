@@ -14,19 +14,39 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var infoBar: UIView!
+    @IBOutlet weak var locationName: UILabel!
+    @IBOutlet weak var locationPhoneNum: UILabel!
+    @IBOutlet weak var locationAddress: UILabel!
+    
+    @IBOutlet weak var directionsButton: UIButton!
+    @IBOutlet weak var websiteButton: UIButton!
     
     let locationManager = CLLocationManager()
     var region = MKCoordinateRegion()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.infoBar.transform = CGAffineTransform(translationX: 0, y: 275)
         locationManager.requestWhenInUseAuthorization()
         mapView.showsUserLocation = true
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
         mapView.delegate = self
-        
+        infoBar.layer.cornerRadius = 20
+
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
     }
+    
+    
+
+    
+    @objc func tap(_ sender: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.3) {
+            self.infoBar.transform = CGAffineTransform(translationX: 0, y: 275)
+        }
+    }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.first!
@@ -44,12 +64,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         search.start { (response, error) in
             if let response = response {
                 for mapItem in response.mapItems {
-                    
                     let annotation = MKPointAnnotation()
                     annotation.coordinate = mapItem.placemark.coordinate
                     annotation.title = mapItem.name
                     self.mapView.addAnnotation(annotation)
-                    
                 }
             }
         }
@@ -68,6 +86,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             pinView?.annotation = annotation
         }
         return pinView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        UIView.animate(withDuration: 0.3) {
+            self.infoBar.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
     }
     
     override func didReceiveMemoryWarning() {
