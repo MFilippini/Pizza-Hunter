@@ -9,11 +9,13 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SafariServices
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var infoBar: UIView!
+    
     @IBOutlet weak var locationName: UILabel!
     @IBOutlet weak var locationPhoneNum: UILabel!
     @IBOutlet weak var locationAddress: UILabel!
@@ -23,6 +25,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     
     let locationManager = CLLocationManager()
     var region = MKCoordinateRegion()
+    var mapItems = [MKMapItem]()
+    var selectedMapItem = MKMapItem()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +41,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tap(_:))))
     }
     
-    
-
     
     @objc func tap(_ sender: UITapGestureRecognizer) {
         UIView.animate(withDuration: 0.3) {
@@ -68,6 +70,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     annotation.coordinate = mapItem.placemark.coordinate
                     annotation.title = mapItem.name
                     self.mapView.addAnnotation(annotation)
+                    self.mapItems.append(mapItem)
                 }
             }
         }
@@ -88,11 +91,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         return pinView
     }
     
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        for mapItem in mapItems {
+            if mapItem.placemark.coordinate.latitude == view.annotation?.coordinate.latitude &&
+                mapItem.placemark.coordinate.longitude == view.annotation?.coordinate.longitude {
+                selectedMapItem = mapItem
+            }
+        }
+    }
+    
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        
+        locationName.text = selectedMapItem.placemark.name
+        var address = selectedMapItem.placemark.subThoroughfare! + " "
+        address += selectedMapItem.placemark.thoroughfare! + "\n"
+        address += selectedMapItem.placemark.locality! + ", "
+        address += selectedMapItem.placemark.administrativeArea! + " "
+        address += selectedMapItem.placemark.postalCode!
+        locationAddress.text = address
+        locationPhoneNum.text = selectedMapItem.phoneNumber
+        
         UIView.animate(withDuration: 0.3) {
             self.infoBar.transform = CGAffineTransform(translationX: 0, y: 0)
         }
     }
+    
+    
+    @IBAction func getDirectionsTap(_ sender: Any) {
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeWalking]
+        MKMapItem.openMaps(with: [selectedMapItem], launchOptions: launchOptions)
+    }
+    
+    @IBAction func getWebsiteTap(_ sender: Any) {
+        if let url = selectedMapItem.url {
+            present(SFSafariViewController(url: url), animated: true)
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
